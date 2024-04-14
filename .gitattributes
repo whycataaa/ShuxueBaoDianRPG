@@ -1,0 +1,3 @@
+*.fbx   -crlf -diff -merge
+*.tga   -crlf -diff -merge
+
