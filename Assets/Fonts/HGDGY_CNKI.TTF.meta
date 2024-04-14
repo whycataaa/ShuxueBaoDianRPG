@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 973175f08575845458552af4b6f52aea
+timeCreated: 1645324086
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: HGDGY_CNKI
+  fontNames:
+  - HGDGY_CNKI
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
