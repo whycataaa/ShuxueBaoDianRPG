@@ -11,18 +11,20 @@ public class NPCController : MonoBehaviour
 {
     [SerializeField] private int i_Task;//NPC任务序号
     [SerializeField] private TextAsset textFile;//对话的文本
-    [SerializeField]private GameViewController viewController;
+    private GameViewController viewController;
     [SerializeField]private List<string> textList=new List<string>();//对话列表
     [SerializeField]private int index;//每按一下F数值+1，i_Count == s_Talk.Length时对话结束
-    [SerializeField]private bool textFinished=true;//对话是否结束
-    [SerializeField]private string NPC_Name;//Npc名字
-    [SerializeField]private float textSpeed;//文本速度
-    [SerializeField]private TaskViewManager taskManager;
-    [SerializeField]private BagGridControl bagGridControl;
-    bool haveTask;
+    private bool textFinished=true;//对话是否结束
+    private string NPC_Name;//Npc名字
+    [SerializeField]private float textSpeed=0.05f;//文本速度
+    private TaskViewManager taskManager;
+    private BagGridControl bagGridControl;
+    [SerializeField]private bool isMainTask;
+    [SerializeField]bool haveTask;
+
     void Awake()
     {
-        haveTask=true;
+        
     }
     void Start()
     {
@@ -31,34 +33,67 @@ public class NPCController : MonoBehaviour
         taskManager=FindObjectOfType(typeof(TaskViewManager)) as TaskViewManager;
         textFinished=true;
         NPC_Name=this.gameObject.name;
-        GetTextFromFile(textFile);
+        if(textFile!=null)
+        {
+            GetTextFromFile(textFile);
+        }
+        
+
     }
 
     IEnumerator SetTextUI()
     {
+
         textFinished=false;
-        viewController.Text_Dialogue.text="";
-        if(textList[index].Trim()==NPC_Name)
+
+            viewController.Text_Dialogue.text="";
+            if(textList[index].Trim()==NPC_Name)
+            {
+                viewController.Text_Name_Top.text=NPC_Name;
+                if(haveTask)
+                {
+                    index++;
+                }
+
+            }
+
+            if(textList[index].Trim()==GameInfo.GetPlayerName())
+            {
+                viewController.Text_Name_Top.text=GameInfo.GetPlayerName();
+                if(haveTask)
+                {
+                    index++;
+                }
+            }
+
+        if(haveTask)
         {
-            viewController.Text_Name_Top.text=NPC_Name;
-            index++;
+            for(int i=0;i<textList[index].Length;i++)
+            {
+                viewController.Text_Dialogue.text+=textList[index][i];
+
+                yield return new WaitForSeconds(textSpeed);
+            }
+            if(haveTask)
+            {
+                index++;
+            }
         }
 
-        if(textList[index].Trim()==GameInfo.GetPlayerName())
+        if(!haveTask)
         {
-            viewController.Text_Name_Top.text=GameInfo.GetPlayerName();
-            index++;
+            for(int i=0;i<textList[textList.Count-1].Length;i++)
+            {
+                viewController.Text_Dialogue.text+=textList[textList.Count-1][i];
+
+                yield return new WaitForSeconds(textSpeed);
+            }
         }
 
-        for(int i=0;i<textList[index].Length;i++)
-        {
-            viewController.Text_Dialogue.text+=textList[index][i];
 
-            yield return new WaitForSeconds(textSpeed);
-        }
 
         textFinished=true;
-        index++;
+
 
     }
 
@@ -87,21 +122,49 @@ public class NPCController : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.tag != "Player") { return; }
-        //玩家按下F或者鼠标左键交互
-        if((Input.GetKeyDown(KeyCode.F)||Input.GetMouseButtonDown(0))&&index==textList.Count)
-        {
-            if(haveTask)
-            {
-                taskManager.CopyTaskButton(i_Task);
-                taskManager.TaskDataDisplay();
-            }
 
+
+
+        //玩家按下F或者鼠标左键交互
+        if(!haveTask&&Input.GetKeyDown(KeyCode.F)&&textFinished&&!viewController.panel_Dialogue.activeSelf)
+        {
+
+            index=textList.Count-1;
+            GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
+            DisShowNPCName();
+            //显示对话框
+            viewController.panel_Dialogue.SetActive(true);
+            StartCoroutine(SetTextUI());
+
+
+
+        }
+        if(Input.GetKeyDown(KeyCode.F)&&textFinished&&!haveTask&&index==textList.Count-1)
+        {
             viewController.panel_Dialogue.SetActive(false);
             GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
-            index=0;
+                return;
+        }
+
+        //对话结束
+        if((Input.GetKeyDown(KeyCode.F)||Input.GetMouseButtonDown(0))&&index==textList.Count)
+        {
+
+            if(haveTask)
+            {
+                //根据任务类型放入主线或者支线
+                GetTaskToCurrentTask();
+
+                taskManager.TaskDataDisplay();
+                haveTask = false;
+            }
+
+                viewController.panel_Dialogue.SetActive(false);
+                GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
+
             return;
         }
-        if(Input.GetKeyDown(KeyCode.F)&&textFinished)
+        if(Input.GetKeyDown(KeyCode.F)&&textFinished&&haveTask)
         {
             GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
             DisShowNPCName();
@@ -110,6 +173,19 @@ public class NPCController : MonoBehaviour
             StartCoroutine(SetTextUI());
         }
     }
+
+    private void GetTaskToCurrentTask()
+    {
+        if (isMainTask)
+        {
+            taskManager.CopyTaskButton(i_Task, taskManager.currentTaskData_Main);
+        }
+        else
+        {
+            taskManager.CopyTaskButton(i_Task, taskManager.currentTaskData_Branch);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
 
     {

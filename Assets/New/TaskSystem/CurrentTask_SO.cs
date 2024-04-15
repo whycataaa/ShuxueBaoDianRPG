@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TaskData_SO", menuName = "Data/Test4/CurrentTask")]
+[CreateAssetMenu(fileName = "TaskData_SO", menuName = "Data/CurrentTask")]
 public class CurrentTask_SO : ScriptableObject
 {
     [Header("任务数据")]
-    public string taskID;
+    public int taskID;
     public string taskName;
     public TaskType taskType;
     [TextArea]
@@ -29,7 +29,7 @@ public class CurrentTask_SO : ScriptableObject
     /// </summary>
     public void ResetTaskData()
     {
-        taskID = string.Empty;
+        taskID = 0;
         taskName = string.Empty;
         taskType = TaskType.Default; // 你需要根据实际情况设置默认值
         taskDescription = string.Empty;

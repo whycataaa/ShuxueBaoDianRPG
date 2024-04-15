@@ -37,6 +37,7 @@ public class TaskDetails
     public List<Item_SO> items;//要收集的物品
     public List<GameObject> enemyPrefabs;//要击杀的敌人
 
+
 }
 
 
