@@ -94,15 +94,22 @@ public class GameInfo
     }
 
     //设置玩家坐标标识
-    public static void SetPos(string pos)
+    public static void SetPos(Vector3 pos)
     {
-        PlayerPrefs.SetString("pos", pos);
+        PlayerPrefs.SetFloat("posX", pos.x);
+        PlayerPrefs.SetFloat("posY", pos.y);
+        PlayerPrefs.SetFloat("posZ", pos.z);
     }
 
     //读取玩家坐标标识
-    public static string GetPos()
+    public static Vector3 GetPos()
     {
-        return PlayerPrefs.GetString("pos");
+        var pos=new Vector3();
+        pos.x=PlayerPrefs.GetFloat("posX");
+        pos.y=PlayerPrefs.GetFloat("posY");
+        pos.z=PlayerPrefs.GetFloat("posZ");
+
+        return pos;
     }
 
     //设置血量药水瓶数量

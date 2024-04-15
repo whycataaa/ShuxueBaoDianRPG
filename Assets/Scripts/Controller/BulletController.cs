@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+///控制玩家发射的子弹
+/// </summary>
 public class BulletController : MonoBehaviour
 {
     [SerializeField] private GameObject obj_Explosion;//爆炸预制体
