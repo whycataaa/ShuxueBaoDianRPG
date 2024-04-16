@@ -14,7 +14,7 @@ public class NPCController : MonoBehaviour
     private GameViewController viewController;
     [SerializeField]private List<string> textList=new List<string>();//对话列表
     [SerializeField]private int index;//每按一下F数值+1，i_Count == s_Talk.Length时对话结束
-    private bool textFinished=true;//对话是否结束
+    [SerializeField]private bool textFinished=true;//对话是否结束
     private string NPC_Name;//Npc名字
     [SerializeField]private float textSpeed=0.05f;//文本速度
     private TaskViewManager taskManager;
@@ -37,7 +37,7 @@ public class NPCController : MonoBehaviour
         {
             GetTextFromFile(textFile);
         }
-        
+
 
     }
 
@@ -124,54 +124,60 @@ public class NPCController : MonoBehaviour
         if (other.tag != "Player") { return; }
 
 
-
-        //玩家按下F或者鼠标左键交互
-        if(!haveTask&&Input.GetKeyDown(KeyCode.F)&&textFinished&&!viewController.panel_Dialogue.activeSelf)
+        if(Input.GetKeyDown(KeyCode.Space))
         {
+            if(!haveTask&&textFinished)
+            {
+                if(!viewController.panel_Dialogue.activeSelf)
+                {
+                    index=textList.Count-1;
+                    GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
+                    DisShowNPCName();
+                    //显示对话框
+                    viewController.panel_Dialogue.SetActive(true);
+                    StartCoroutine(SetTextUI());
+                }
 
-            index=textList.Count-1;
-            GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
-            DisShowNPCName();
-            //显示对话框
-            viewController.panel_Dialogue.SetActive(true);
-            StartCoroutine(SetTextUI());
+                if(index==textList.Count-1&&textFinished)
+                {
+                    viewController.panel_Dialogue.SetActive(false);
+                    GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
+                    return;
+                }
 
-
-
-        }
-        if(Input.GetKeyDown(KeyCode.F)&&textFinished&&!haveTask&&index==textList.Count-1)
-        {
-            viewController.panel_Dialogue.SetActive(false);
-            GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
-                return;
-        }
-
-        //对话结束
-        if((Input.GetKeyDown(KeyCode.F)||Input.GetMouseButtonDown(0))&&index==textList.Count)
-        {
-
+            }
             if(haveTask)
             {
-                //根据任务类型放入主线或者支线
-                GetTaskToCurrentTask();
+                if(index==textList.Count)
+                {
+                    //根据任务类型放入主线或者支线
+                    GetTaskToCurrentTask();
 
-                taskManager.TaskDataDisplay();
-                haveTask = false;
-            }
 
+                    haveTask = false;
+                
                 viewController.panel_Dialogue.SetActive(false);
                 GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
 
-            return;
+                return;
+                }
+
+                if(textFinished)
+                {
+                    GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
+                    DisShowNPCName();
+                    //显示对话框
+                    viewController.panel_Dialogue.SetActive(true);
+                    StartCoroutine(SetTextUI());
+                }
+            }
+
+
         }
-        if(Input.GetKeyDown(KeyCode.F)&&textFinished&&haveTask)
-        {
-            GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
-            DisShowNPCName();
-            //显示对话框
-            viewController.panel_Dialogue.SetActive(true);
-            StartCoroutine(SetTextUI());
-        }
+        //玩家按下F或者鼠标左键交互
+
+        //对话结束
+
     }
 
     private void GetTaskToCurrentTask()
@@ -179,10 +185,12 @@ public class NPCController : MonoBehaviour
         if (isMainTask)
         {
             taskManager.CopyTaskButton(i_Task, taskManager.currentTaskData_Main);
+            taskManager.TaskDataDisplay(taskManager.currentTaskData_Main);
         }
         else
         {
             taskManager.CopyTaskButton(i_Task, taskManager.currentTaskData_Branch);
+            taskManager.TaskDataDisplay(taskManager.currentTaskData_Branch);
         }
     }
 

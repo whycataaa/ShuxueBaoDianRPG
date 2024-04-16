@@ -6,6 +6,7 @@ using TMPro;
 
 public class TaskViewManager : MonoBehaviour
 {
+
     [Header("SO获取")]
     public TaskData_SO taskListData;
     public CurrentTask_SO currentTaskData_Main;
@@ -16,21 +17,48 @@ public class TaskViewManager : MonoBehaviour
     public Text taskDescription;
     public Text taskTarget;
     public Text taskRemuneration;
-    [Header("大任务面板")]
-    //一些其他的变量
+
+
     public GameObject taskMINI;
+    [Header("大任务面板")]
+    public GameObject taskBIG;
+    public Button Bt_taskMain;
+    public Button Bt_taskBranch;
+    public GameObject panel_taskMain;
+    public GameObject panel_taskBranch;
+
+
+    //一些其他的变量
     private string taskInfo;
     private bool isClear;
     private bool missID;
+
+GameViewController gameViewController;
+
+
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        taskBIG.SetActive(false);
+        Bt_taskMain.onClick.AddListener(()=>Panel_BagView.SetObjectToActive(panel_taskMain,panel_taskBranch));
+        Bt_taskBranch.onClick.AddListener(()=>Panel_BagView.SetObjectToActive(panel_taskBranch,panel_taskMain));
+
+    }
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
     void Start()
     {
-        //运行任务显示
-        TaskDataDisplay();
+        // //运行任务显示
+        // TaskDataDisplay(currentTaskData_Main);
+        gameViewController=FindObjectOfType(typeof(GameViewController)) as GameViewController;
     }
+
+
     private void Update()
     {
         if(isClear)
@@ -48,6 +76,11 @@ public class TaskViewManager : MonoBehaviour
         if(currentTaskData_Main.finishedTask)
         {
             ClearCurrentTask(currentTaskData_Main);
+        }
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            taskBIG.SetActive(!taskBIG.activeSelf);
+            Panel_BagView.SetObjectToActive(panel_taskMain,panel_taskBranch);
         }
     }
 
@@ -113,11 +146,11 @@ public class TaskViewManager : MonoBehaviour
     /// <summary>
     /// 当前任务内容显示
     /// </summary>
-    public void TaskDataDisplay()
+    public void TaskDataDisplay(CurrentTask_SO currentTask_SO)
     {
-        taskName.text = currentTaskData_Main.taskName;//任务名称
-        taskDescription.text =currentTaskData_Main.taskDescription;//任务内容
-        taskTarget.text=currentTaskData_Main.taskTarget;//任务目标
+        taskName.text = currentTask_SO.taskName;//任务名称
+        taskDescription.text =currentTask_SO.taskDescription;//任务内容
+        taskTarget.text=currentTask_SO.taskTarget;//任务目标
 
         taskRemuneration.text = "" + currentTaskData_Main.remuneration;//任务报酬
     }

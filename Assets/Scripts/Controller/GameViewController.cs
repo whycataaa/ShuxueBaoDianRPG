@@ -11,6 +11,7 @@ public class GameViewController : MonoBehaviour
     //所要显示的面板
     public GameObject panel_GameMain;
     public GameObject panel_Hurt, panel_Exit, panel_Die;
+    public GameObject panel_Bag,panel_TaskMINI,panel_Task;
     [Header("对话系统")]
     [HideInInspector]public GameObject panel_ShowNPCName;
     [HideInInspector]public GameObject panel_Dialogue;
@@ -51,7 +52,9 @@ public class GameViewController : MonoBehaviour
         if (panel_Hurt) { panel_Hurt.SetActive(false); }
         if (panel_Exit) { panel_Exit.SetActive(false); }
         if (panel_Die) { panel_Die.SetActive(false); }
-
+        if (panel_Bag) { panel_Bag.SetActive(false); }
+        if (panel_TaskMINI) { panel_TaskMINI.SetActive(false);}
+        if (panel_Task) { panel_Task.SetActive(false);}
 
         //激活面板
         if (panel1 != null) { panel1.SetActive(true); }

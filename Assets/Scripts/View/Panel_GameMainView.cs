@@ -11,7 +11,7 @@ public class Panel_GameMainView : MonoBehaviour
     //药水小物品图标：血量，体力，普通攻击力，魔法攻击力，普通防御力，魔法防御力
     [SerializeField] private Text item_HP, item_MP, item_Attack, item_Magic, item_ATKDefense, item_MGDefense, coin, taskName;
     //武器图标锁1，2，3
-    [SerializeField] private GameObject weaponLock1, weaponLock2, weaponLock3;
+ //   [SerializeField] private GameObject weaponLock1, weaponLock2, weaponLock3;
     //血量条、体力条
     [SerializeField] private GameObject img_HP, img_MP;
     //任务名称
