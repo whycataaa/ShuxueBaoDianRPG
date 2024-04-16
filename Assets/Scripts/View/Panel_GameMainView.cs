@@ -21,6 +21,7 @@ public class Panel_GameMainView : MonoBehaviour
 
     void Start()
     {
+
         //获取血量条长度、高度
         f_Panel_HPHight = img_HP.GetComponent<RectTransform>().rect.height;
         f_Panel_HPWidth = img_HP.GetComponent<RectTransform>().rect.width;
