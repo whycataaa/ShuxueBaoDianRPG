@@ -19,7 +19,8 @@ public class GameViewController : MonoBehaviour
     [HideInInspector]public Text Text_NPCName;
     [HideInInspector]public Text Text_Name_Top;//显示在对话框顶的角色名
  
-
+    [Header("商店系统")]
+    public GameObject panel_Store;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -28,6 +29,7 @@ public class GameViewController : MonoBehaviour
         GameInfo.SetPlayerName("向南");
         //
         //
+
         panel_ShowNPCName=GameObject.Find("Image_ShowNPCBG");
         panel_Dialogue=GameObject.Find("Image_DialogueBG");
         Text_NPCName=GameObject.Find("Text_NPCName").GetComponent<Text>();
@@ -55,7 +57,7 @@ public class GameViewController : MonoBehaviour
         if (panel_Bag) { panel_Bag.SetActive(false); }
         if (panel_TaskMINI) { panel_TaskMINI.SetActive(false);}
         if (panel_Task) { panel_Task.SetActive(false);}
-
+        if (panel_Store) { panel_Store.SetActive(false);}
         //激活面板
         if (panel1 != null) { panel1.SetActive(true); }
         if (panel2 != null) { panel2.SetActive(true); }

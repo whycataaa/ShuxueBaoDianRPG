@@ -25,9 +25,9 @@ public class TaskCheck : MonoBehaviour
             {
                 var npcPos=currentTask_SO_Main.npc.transform.position;
                 var playerPos=GameInfo.GetPos();
-                Debug.Log(npcPos);
-                Debug.Log(playerPos);
-                Debug.Log((npcPos-playerPos).magnitude);
+                // Debug.Log(npcPos);
+                // Debug.Log(playerPos);
+                // Debug.Log((npcPos-playerPos).magnitude);
                 if((npcPos-playerPos).magnitude<searchPersonDistance)
                 {
                     Debug.Log("havefindperson");

@@ -152,7 +152,7 @@ GameViewController gameViewController;
         taskDescription.text =currentTask_SO.taskDescription;//任务内容
         taskTarget.text=currentTask_SO.taskTarget;//任务目标
 
-        taskRemuneration.text = "" + currentTaskData_Main.remuneration;//任务报酬
+        taskRemuneration.text = "" + currentTask_SO.remuneration;//任务报酬
     }
 
     /// <summary>

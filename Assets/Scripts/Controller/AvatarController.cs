@@ -21,9 +21,9 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        //鼠标锁定
-        Cursor.visible=true;
-        Cursor.lockState=CursorLockMode.Locked;
+        // //鼠标锁定
+        // Cursor.visible=true;
+        // Cursor.lockState=CursorLockMode.Locked;
     }
     void Start()
     {

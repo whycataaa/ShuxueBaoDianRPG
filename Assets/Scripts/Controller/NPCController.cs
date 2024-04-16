@@ -21,6 +21,7 @@ public class NPCController : MonoBehaviour
     private BagGridControl bagGridControl;
     [SerializeField]private bool isMainTask;
     [SerializeField]bool haveTask;
+    [SerializeField]bool canStore=false;
 
     void Awake()
     {
@@ -74,10 +75,8 @@ public class NPCController : MonoBehaviour
 
                 yield return new WaitForSeconds(textSpeed);
             }
-            if(haveTask)
-            {
                 index++;
-            }
+
         }
 
         if(!haveTask)
@@ -124,13 +123,15 @@ public class NPCController : MonoBehaviour
         if (other.tag != "Player") { return; }
 
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.C))
         {
+            //没任务了并且对话结束
             if(!haveTask&&textFinished)
             {
+                //
                 if(!viewController.panel_Dialogue.activeSelf)
                 {
-                    index=textList.Count-1;
+                    index=textList.Count-2;
                     GameObject.Find("Player").GetComponent<AvatarController>().CanMove(false);//停止玩家移动
                     DisShowNPCName();
                     //显示对话框
@@ -138,7 +139,7 @@ public class NPCController : MonoBehaviour
                     StartCoroutine(SetTextUI());
                 }
 
-                if(index==textList.Count-1&&textFinished)
+                if(index==textList.Count-2&&textFinished)
                 {
                     viewController.panel_Dialogue.SetActive(false);
                     GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
@@ -155,7 +156,7 @@ public class NPCController : MonoBehaviour
 
 
                     haveTask = false;
-                
+
                 viewController.panel_Dialogue.SetActive(false);
                 GameObject.Find("Player").GetComponent<AvatarController>().CanMove(true);//取消停止玩家移动
 

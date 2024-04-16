@@ -28,15 +28,15 @@ public class Panel_BagView : MonoBehaviour
     }
     void Update()
     {
-        Cursor.visible=panel_Bag.activeSelf;
-        if(panel_Bag.activeSelf)
-        {
-            Cursor.lockState=CursorLockMode.Confined;
-        }
-        else
-        {
-            Cursor.lockState=CursorLockMode.Locked;
-        }
+        // Cursor.visible=panel_Bag.activeSelf;
+        // if(panel_Bag.activeSelf)
+        // {
+        //     Cursor.lockState=CursorLockMode.Confined;
+        // }
+        // else
+        // {
+        //     Cursor.lockState=CursorLockMode.Locked;
+        // }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
             //切换背包的显示与隐藏

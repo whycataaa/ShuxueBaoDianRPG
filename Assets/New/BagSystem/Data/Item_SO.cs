@@ -20,4 +20,6 @@ public class Item_SO : ScriptableObject
     public int itemNum;
     [TextArea] //改变输入框格式，提示输入框容量
     public string itemInfo;
+
+    public int price;
 }

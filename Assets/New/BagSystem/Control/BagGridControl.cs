@@ -74,15 +74,6 @@ public class BagGridControl : MonoBehaviour
         return null;
     }
     /// <summary>
-    /// 根据物品返回背包中物品的数量
-    /// </summary>
-    /// <returns></returns>
-    // public int FindItemFromBag(string itemName)
-    // {
-
-    //     return ;
-    // }
-    /// <summary>
     /// 将背包数据仓库中所有物体显示在UI上
     /// </summary>
     public static void updateItemToUI()

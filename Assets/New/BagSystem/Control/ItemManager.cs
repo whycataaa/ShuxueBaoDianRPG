@@ -51,6 +51,10 @@ public class ItemManager : MonoBehaviour
                     if(item.itemName==x.itemName)
                     {
                         x.itemNum--;
+                        if(x.itemNum==0)
+                        {
+                            bagItem.bag_A.Remove(x);
+                        }
                     }
                 }
                 break;
@@ -61,6 +65,10 @@ public class ItemManager : MonoBehaviour
                     if(item.itemName==x.itemName)
                     {
                         x.itemNum--;
+                        if(x.itemNum==0)
+                        {
+                            bagItem.bag_A.Remove(x);
+                        }
                     }
                 }
                 break;
@@ -71,6 +79,10 @@ public class ItemManager : MonoBehaviour
                     if(item.itemName==x.itemName)
                     {
                         x.itemNum--;
+                        if(x.itemNum==0)
+                        {
+                            bagItem.bag_A.Remove(x);
+                        }
                     }
                 }
                 break;
