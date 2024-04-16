@@ -19,8 +19,8 @@ public class RotateAvatar : MonoBehaviour
 
     void Update()
     {
-        //按下鼠标右键时旋转。Input.GetMouseButton(0)左键，Input.GetMouseButton(1)右键，Input.GetMouseButton(2)中间键
-        if (!Input.GetMouseButton(0)) { return; }
+        // //按下鼠标右键时旋转。Input.GetMouseButton(0)左键，Input.GetMouseButton(1)右键，Input.GetMouseButton(2)中间键
+        // if (!Input.GetMouseButton(0)) { return; }
 
         //鼠标左右移动
         if (axes == RotationAxes.MouseX)

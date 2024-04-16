@@ -38,5 +38,4 @@ public class GameController : MonoBehaviour
         player.transform.rotation = obj_BornPos.transform.rotation;
         player.GetComponent<AvatarController>().CanMove(true);
     }
-
 }

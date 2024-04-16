@@ -9,14 +9,15 @@ using UnityEngine.UI;
 public class GameViewController : MonoBehaviour
 {
     //所要显示的面板
-    public GameObject panel_GameMain, panel_DaTi, panel_Detail;
-    public GameObject panel_Hurt, panel_Exit, panel_Die, panel_Win, panel_MapTask;
+    public GameObject panel_GameMain;
+    public GameObject panel_Hurt, panel_Exit, panel_Die;
+    public GameObject panel_Bag,panel_TaskMINI,panel_Task;
     [Header("对话系统")]
-    public GameObject panel_ShowNPCName;
-    public GameObject panel_Dialogue;
-    public Text Text_Dialogue;
-    public Text Text_NPCName;
-    public Text Text_Name_Top;//显示在对话框顶的角色名
+    [HideInInspector]public GameObject panel_ShowNPCName;
+    [HideInInspector]public GameObject panel_Dialogue;
+    [HideInInspector]public Text Text_Dialogue;
+    [HideInInspector]public Text Text_NPCName;
+    [HideInInspector]public Text Text_Name_Top;//显示在对话框顶的角色名
  
 
     /// <summary>
@@ -48,14 +49,12 @@ public class GameViewController : MonoBehaviour
     {
         //将全部面板隐藏
         if (panel_GameMain) { panel_GameMain.SetActive(false); }
-        if (panel_Detail) { panel_Detail.SetActive(false); }
-        if (panel_DaTi) { panel_DaTi.SetActive(false); }
         if (panel_Hurt) { panel_Hurt.SetActive(false); }
         if (panel_Exit) { panel_Exit.SetActive(false); }
         if (panel_Die) { panel_Die.SetActive(false); }
-        if (panel_Win) { panel_Win.SetActive(false); }
-        if (panel_MapTask) { panel_MapTask.SetActive(false); }
-
+        if (panel_Bag) { panel_Bag.SetActive(false); }
+        if (panel_TaskMINI) { panel_TaskMINI.SetActive(false);}
+        if (panel_Task) { panel_Task.SetActive(false);}
 
         //激活面板
         if (panel1 != null) { panel1.SetActive(true); }
